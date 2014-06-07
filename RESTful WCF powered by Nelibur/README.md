@@ -11,6 +11,3 @@ Further reading
  * [Advantages of message based web services](https://github.com/ServiceStack/ServiceStack/wiki/Advantages-of-message-based-web-services)
  * [Building RESTful Message Based Web Services with WCF](http://www.codeproject.com/Articles/712689/Building-RESTful-Message-Based-Web-Services-with-W)
  * [Amazon's API](http://docs.aws.amazon.com/AWSEC2/latest/APIReference/ApiReference-query-AuthorizeSecurityGroupEgress.html)
-
-
-
