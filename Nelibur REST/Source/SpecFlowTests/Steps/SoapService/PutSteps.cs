@@ -1,0 +1,60 @@
+﻿using System;
+using System.Linq;
+using Nelibur.ServiceModel.Clients;
+using SpecFlowTests.Samples.Contracts;
+using TechTalk.SpecFlow;
+using TechTalk.SpecFlow.Assist;
+
+namespace SpecFlowTests.Steps.SoapService
+{
+    [Scope(Feature = "Put soap actions")]
+    [Binding]
+    public sealed class PutSteps : SoapServiceActionStep
+    {
+        [AfterFeature]
+        public static void AfterFeature()
+        {
+            StopService();
+        }
+
+        [BeforeFeature]
+        public static void BeforeFeature()
+        {
+            StartService();
+        }
+
+        [When(@"I update data thru Put action")]
+        public void WhenIUpdateDataThruPutAction(Table table)
+        {
+            UpdateOrder request = table.CreateSet<UpdateOrder>().Single();
+            SoapServiceClient client = GetClient();
+            client.Put(request);
+        }
+
+        [When(@"I update data thru Put action with response")]
+        public void WhenIUpdateDataThruPutActionWithResponse(Table table)
+        {
+            UpdateOrder request = table.CreateSet<UpdateOrder>().Single();
+            SoapServiceClient client = GetClient();
+            var response = client.Put<bool>(request);
+            ScenarioContext.Current[ResopnseKey] = response;
+        }
+
+        [When(@"I update data thru PutAsync action")]
+        public void WhenIUpdateDataThruPutAsyncAction(Table table)
+        {
+            UpdateOrder request = table.CreateSet<UpdateOrder>().Single();
+            SoapServiceClient client = GetClient();
+            client.PutAsync(request).Wait();
+        }
+
+        [When(@"I update data thru PutAsync action with response")]
+        public void WhenIUpdateDataThruPutAsyncActionWithResponse(Table table)
+        {
+            UpdateOrder request = table.CreateSet<UpdateOrder>().Single();
+            SoapServiceClient client = GetClient();
+            bool response = client.PutAsync<bool>(request).Result;
+            ScenarioContext.Current[ResopnseKey] = response;
+        }
+    }
+}
