@@ -1,4 +1,4 @@
-CodeProject samples
+CodeProject's samples
 =======
 
 Here is you can find the latest source code for my CodeProject articles
