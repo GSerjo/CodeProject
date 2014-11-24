@@ -38,6 +38,11 @@ namespace OptionSample
             return new EmailRequest { Recipient = "John Doe" };
         }
 
+        private static bool IsLuckyRecipient(string recipient)
+        {
+            return string.Equals(recipient, "John Doy", StringComparison.OrdinalIgnoreCase);
+        }
+
         private static void Main()
         {
             WhereSample();
@@ -79,7 +84,7 @@ namespace OptionSample
                 .ToOption()
                 .Where(x => x.IsValid())
                 .Map(x => Email.From(x))
-                .Match(x => x.Recipient == "John Doy", x => ExecuteAction(x))
+                .Match(x => IsLuckyRecipient(x.Recipient), x => ExecuteAction(x))
                 .Do(x => Console.WriteLine(x));
         }
 
