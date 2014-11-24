@@ -8,29 +8,42 @@ namespace OptionSample
 {
     internal class Program
     {
-        private static bool CustomEmailRequestValidation(EmailRequest request)
-        {
-            return true;
-        }
-
         private static void DoSample()
         {
             GetEmailRequest()
                 .ToOption()
+                .Do(x => ExecuteAction(x));
+        }
+
+        private static void DoWithWhereSample()
+        {
+            GetEmailRequest()
+                .ToOption()
                 .Where(x => x.IsValid())
-                .Where(x => CustomEmailRequestValidation(x))
-                .Do(x => Console.WriteLine(x));
+                .Do(x => ExecuteAction(x));
+        }
+
+        private static void ExecuteAction(EmailRequest request)
+        {
+            Console.WriteLine("EmailRequest for {0}", request.Recipient);
+        }
+
+        private static void ExecuteAction(Email email)
+        {
+            Console.WriteLine("Email for {0}", email.Recipient);
         }
 
         private static EmailRequest GetEmailRequest()
         {
-            return new EmailRequest { FirstName = "John", LastName = "Doe" };
+            return new EmailRequest { Recipient = "John Doe" };
         }
 
         private static void Main()
         {
             WhereSample();
             DoSample();
+            WhereSample();
+            DoWithWhereSample();
 
             MapSample();
             MapOnEmptySample();
@@ -56,7 +69,6 @@ namespace OptionSample
             GetEmailRequest()
                 .ToOption()
                 .Where(x => x.IsValid())
-                .Where(x => CustomEmailRequestValidation(x))
                 .Map(x => Email.From(x))
                 .Do(x => Console.WriteLine(x));
         }
@@ -66,10 +78,8 @@ namespace OptionSample
             GetEmailRequest()
                 .ToOption()
                 .Where(x => x.IsValid())
-                .Where(x => CustomEmailRequestValidation(x))
                 .Map(x => Email.From(x))
-                .Match(x => x.FirstName == "John", x => Console.WriteLine("Hello {0}", x.FirstName))
-                .Match(x => x.LastName == "Doe", x => Console.WriteLine("Hello {0}", x.LastName))
+                .Match(x => x.Recipient == "John Doy", x => ExecuteAction(x))
                 .Do(x => Console.WriteLine(x));
         }
 
@@ -78,7 +88,6 @@ namespace OptionSample
             GetEmailRequest()
                 .ToOption()
                 .Where(x => x.IsValid())
-                .Where(x => CustomEmailRequestValidation(x))
                 .Map(x => Email.From(x))
                 .MatchType<HappyEmail>(x => Console.WriteLine("Happy"))
                 .Do(x => Console.WriteLine(x));
@@ -88,8 +97,7 @@ namespace OptionSample
         {
             Option<EmailRequest> request = GetEmailRequest()
                 .ToOption()
-                .Where(x => x.IsValid())
-                .Where(x => CustomEmailRequestValidation(x));
+                .Where(x => x.IsValid());
             if (request.HasValue)
             {
                 Console.WriteLine(request.Value);

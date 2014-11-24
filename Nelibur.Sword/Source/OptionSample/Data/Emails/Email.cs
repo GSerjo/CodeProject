@@ -6,12 +6,10 @@ namespace OptionSample.Data.Emails
     {
         protected Email(EmailRequest request)
         {
-            FirstName = request.FirstName;
-            LastName = request.LastName;
+            Recipient = request.Recipient;
         }
 
-        public string FirstName { get; private set; }
-        public string LastName { get; private set; }
+        public string Recipient { get; private set; }
 
         public static Email From(EmailRequest request)
         {
@@ -20,7 +18,7 @@ namespace OptionSample.Data.Emails
 
         public override string ToString()
         {
-            return string.Format("Type: {0}, FirstName: {1}, LastName: {2}", typeof(Email).Name, FirstName, LastName);
+            return string.Format("Type: {0}, FirstName: {1}", typeof(Email).Name, Recipient);
         }
     }
 }

@@ -48,6 +48,7 @@
     <Compile Include="Data\Emails\Email.cs" />
     <Compile Include="Data\EmailRequest.cs" />
     <Compile Include="Data\Emails\HappyEmail.cs" />
+    <Compile Include="Data\Emails\QuickEmail.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

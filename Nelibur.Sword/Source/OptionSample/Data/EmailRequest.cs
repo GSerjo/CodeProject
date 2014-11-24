@@ -4,16 +4,11 @@ namespace OptionSample.Data
 {
     public sealed class EmailRequest
     {
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
+        public string Recipient { get; set; }
 
         public bool IsValid()
         {
-            if (string.IsNullOrWhiteSpace(FirstName))
-            {
-                return false;
-            }
-            if (string.IsNullOrWhiteSpace(LastName))
+            if (string.IsNullOrWhiteSpace(Recipient))
             {
                 return false;
             }
@@ -22,7 +17,7 @@ namespace OptionSample.Data
 
         public override string ToString()
         {
-            return string.Format("Type: {0}, FirstName: {1}, LastName: {2}", typeof(EmailRequest).Name, FirstName, LastName);
+            return string.Format("Type: {0}, Recipient: {1}", typeof(EmailRequest).Name, Recipient);
         }
     }
 }
