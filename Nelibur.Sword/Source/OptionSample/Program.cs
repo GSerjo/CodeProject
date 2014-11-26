@@ -75,7 +75,7 @@ namespace OptionSample
                 .ToOption()
                 .Where(x => x.IsValid())
                 .Map(x => Email.From(x))
-                .Do(x => Console.WriteLine(x));
+                .Do(x => ExecuteAction(x));
         }
 
         private static void MatchSample()
@@ -85,7 +85,7 @@ namespace OptionSample
                 .Where(x => x.IsValid())
                 .Map(x => Email.From(x))
                 .Match(x => IsLuckyRecipient(x.Recipient), x => ExecuteAction(x))
-                .Do(x => Console.WriteLine(x));
+                .Do(x => ExecuteAction(x));
         }
 
         private static void MatchTypeSample()
