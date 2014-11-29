@@ -33,6 +33,11 @@ namespace OptionSample
             Console.WriteLine("Email for {0}", email.Recipient);
         }
 
+        private static void ExecuteLuckyAction(Email email)
+        {
+            Console.WriteLine("Email for lucky {0}", email.Recipient);
+        }
+
         private static EmailRequest GetEmailRequest()
         {
             return new EmailRequest { Recipient = "John Doe" };
@@ -61,12 +66,10 @@ namespace OptionSample
 
         private static void MapOnEmptySample()
         {
-            ((EmailRequest)null)
-                .ToOption()
-                .DoOnEmpty(() => Console.WriteLine("Empty"))
-                .MapOnEmpty(() => GetEmailRequest())
-                .Map(x => Email.From(x))
-                .Do(x => Console.WriteLine(x));
+            Option<EmailRequest>.Empty
+                                .DoOnEmpty(() => Console.WriteLine("Empty"))
+                                .MapOnEmpty(() => GetEmailRequest())
+                                .Do(x => ExecuteAction(x));
         }
 
         private static void MapSample()
@@ -84,7 +87,7 @@ namespace OptionSample
                 .ToOption()
                 .Where(x => x.IsValid())
                 .Map(x => Email.From(x))
-                .Match(x => IsLuckyRecipient(x.Recipient), x => ExecuteAction(x))
+                .Match(x => IsLuckyRecipient(x.Recipient), x => ExecuteLuckyAction(x))
                 .Do(x => ExecuteAction(x));
         }
 
