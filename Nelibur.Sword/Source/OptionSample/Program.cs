@@ -98,6 +98,7 @@ namespace OptionSample
                 .Where(x => x.IsValid())
                 .Map(x => Email.From(x))
                 .MatchType<HappyEmail>(x => Console.WriteLine("Happy"))
+                .MatchType<QuickEmail>(x => Console.WriteLine("Quick"))
                 .Do(x => Console.WriteLine(x));
         }
 

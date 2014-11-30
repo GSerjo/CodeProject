@@ -13,7 +13,12 @@ namespace OptionSample.Data.Emails
 
         public static Email From(EmailRequest request)
         {
-            return new HappyEmail(request);
+            int randomValue = new Random().Next(1000);
+            if (randomValue % 2 == 0)
+            {
+                return new HappyEmail(request);
+            }
+            return new QuickEmail(request);
         }
 
         public override string ToString()
