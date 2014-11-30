@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Nelibur.Sword.DataStructures;
 using Nelibur.Sword.Extensions;
 using OptionSample.Data;
@@ -50,17 +51,24 @@ namespace OptionSample
 
         private static void Main()
         {
-            WhereSample();
-            DoSample();
-            WhereSample();
-            DoWithWhereSample();
+            var samples = new List<Action>
+            {
+                WhereSample,
+                DoSample,
+                WhereSample,
+                DoWithWhereSample,
+                MapSample,
+                MapOnEmptySample,
+                MatchSample,
+                MatchTypeSample,
+            };
 
-            MapSample();
-            MapOnEmptySample();
-
-            MatchSample();
-            MatchTypeSample();
-
+            samples.Iter(action =>
+            {
+                Console.WriteLine(action.Method.Name);
+                action();
+                Console.WriteLine(Environment.NewLine);
+            });
             Console.ReadKey();
         }
 
