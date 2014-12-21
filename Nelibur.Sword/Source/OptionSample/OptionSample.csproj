@@ -34,9 +34,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Nelibur.Sword, Version=3.0.3.211, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Nelibur.Sword, Version=3.0.3.213, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Nelibur.Sword.3.0.3-beta7\lib\net45\Nelibur.Sword.dll</HintPath>
+      <HintPath>..\..\packages\Nelibur.Sword.3.1.0\lib\net45\Nelibur.Sword.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

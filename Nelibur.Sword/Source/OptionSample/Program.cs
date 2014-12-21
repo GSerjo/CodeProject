@@ -61,6 +61,8 @@ namespace OptionSample
                 MapOnEmptySample,
                 MatchSample,
                 MatchTypeSample,
+                SelectWithEmpySample,
+                SelectSample
             };
 
             samples.Iter(action =>
@@ -108,6 +110,36 @@ namespace OptionSample
                 .MatchType<HappyEmail>(x => Console.WriteLine("Happy"))
                 .MatchType<QuickEmail>(x => Console.WriteLine("Quick"))
                 .Do(x => Console.WriteLine(x));
+        }
+
+        private static void SelectWithEmpySample()
+        {
+            Option<string> lucky = from x in CreateEmail()
+                                   from y in Option<Email>.Empty
+                                   select SelectLucky(x.Recipient, y.Recipient);
+
+            lucky.Do(x => Console.WriteLine("First"))
+                 .DoOnEmpty(() => Console.WriteLine("Nobody"));
+        }
+
+        private static void SelectSample()
+        {
+            Option<string> lucky = from x in CreateEmail()
+                                   from y in CreateEmail()
+                                   select SelectLucky(x.Recipient, y.Recipient);
+
+            lucky.Do(x => Console.WriteLine("First"))
+                 .DoOnEmpty(() => Console.WriteLine("Nobody"));
+        }
+
+        private static Option<Email> CreateEmail()
+        {
+            return Email.From(GetEmailRequest()).ToOption();
+        }
+
+        private static string SelectLucky(params string[] rescipients)
+        {
+            return rescipients[0];
         }
 
         private static void WhereSample()
