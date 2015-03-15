@@ -45,13 +45,17 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="TinyMapper">
+    <Reference Include="TinyMapper, Version=1.0.3.12, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\TinyMapper.1.0.2\lib\net45\TinyMapper.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Contracts\Address.cs" />
     <Compile Include="Contracts\Person.cs" />
+    <Compile Include="Contracts\PersonComplex.cs" />
     <Compile Include="Contracts\PersonDto.cs" />
+    <Compile Include="Contracts\PersonDtoComplex.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

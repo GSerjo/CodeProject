@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using AutoMapper;
 using Nelibur.ObjectMapper;
@@ -27,6 +28,10 @@ namespace Samples
 
         private static void Main()
         {
+            MapPerson();
+
+            MapPersonComplex();
+
             MeasureHandwritten();
             MeasureTinyMapper();
             MeasureAutoMapper();
@@ -63,10 +68,41 @@ namespace Samples
                 Address = "Wall Street",
                 CreateTime = DateTime.Now,
                 Nickname = "Object Mapper",
-                Phone = "Call Me Maybe "
+                Phone = "Call Me Maybe"
             };
 
             var personDto = TinyMapper.Map<PersonDto>(person);
+        }
+
+        private static void MapPersonComplex()
+        {
+            TinyMapper.Bind<PersonComplex, PersonDtoComplex>(config =>
+            {
+                config.Ignore(x => x.CreateTime);
+                config.Ignore(x => x.Nickname);
+            });
+
+            var person = new PersonComplex
+            {
+                Id = Guid.NewGuid(),
+                FirstName = "John",
+                LastName = "Doe",
+                Address = new Address
+                {
+                    Phone = "Call Me Maybe",
+                    Street = "Wall Street",
+                    ZipCode = "101000"
+                },
+                CreateTime = DateTime.Now,
+                Nickname = "Object Mapper",
+                Emails = new List<string>
+                {
+                    "help@tinymapper.net",
+                    "john@tinymapper.net"
+                }
+            };
+
+            var personDto = TinyMapper.Map<PersonDtoComplex>(person);
         }
 
         private static void MeasureAutoMapper()
