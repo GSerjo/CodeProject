@@ -43,7 +43,14 @@ namespace Samples
 
         private static void MapPersonCustom()
         {
-            throw new NotImplementedException();
+            TinyMapper.Bind<PersonCustom, PersonDtoCustom>();
+            var source = new PersonCustom
+            {
+                FirstName = "John",
+                LastName = "Doe"
+            };
+
+            var result = TinyMapper.Map<PersonDtoCustom>(source);
         }
 
         private static PersonDto MapHandwritten(Person person)
