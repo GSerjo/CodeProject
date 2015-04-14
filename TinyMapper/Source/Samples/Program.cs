@@ -32,11 +32,18 @@ namespace Samples
 
             MapPersonComplex();
 
+            MapPersonCustom();
+
             MeasureHandwritten();
             MeasureTinyMapper();
             MeasureAutoMapper();
 
             Console.ReadKey();
+        }
+
+        private static void MapPersonCustom()
+        {
+            throw new NotImplementedException();
         }
 
         private static PersonDto MapHandwritten(Person person)
