@@ -11,9 +11,9 @@ namespace Samples
     {
         private const int Iterations = 1000000;
 
-        private static Person CreatePerson()
+        private static PersonSource CreatePerson()
         {
-            return new Person
+            return new PersonSource
             {
                 Id = Guid.NewGuid(),
                 FirstName = "John",
@@ -41,21 +41,9 @@ namespace Samples
             Console.ReadKey();
         }
 
-        private static void MapPersonCustom()
+        private static PersonTarget MapHandwritten(PersonSource person)
         {
-            TinyMapper.Bind<PersonCustom, PersonDtoCustom>();
-            var source = new PersonCustom
-            {
-                FirstName = "John",
-                LastName = "Doe"
-            };
-
-            var result = TinyMapper.Map<PersonDtoCustom>(source);
-        }
-
-        private static PersonDto MapHandwritten(Person person)
-        {
-            var result = new PersonDto
+            var result = new PersonTarget
             {
                 Id = person.Id,
                 FirstName = person.FirstName,
@@ -71,9 +59,9 @@ namespace Samples
 
         private static void MapPerson()
         {
-            TinyMapper.Bind<Person, PersonDto>();
+            TinyMapper.Bind<PersonSource, PersonTarget>();
 
-            var person = new Person
+            var person = new PersonSource
             {
                 Id = Guid.NewGuid(),
                 FirstName = "John",
@@ -85,18 +73,18 @@ namespace Samples
                 Phone = "Call Me Maybe"
             };
 
-            var personDto = TinyMapper.Map<PersonDto>(person);
+            var personDto = TinyMapper.Map<PersonTarget>(person);
         }
 
         private static void MapPersonComplex()
         {
-            TinyMapper.Bind<PersonComplex, PersonDtoComplex>(config =>
+            TinyMapper.Bind<PersonComplexSource, PersonComplexTarget>(config =>
             {
                 config.Ignore(x => x.CreateTime);
                 config.Ignore(x => x.Nickname);
             });
 
-            var person = new PersonComplex
+            var person = new PersonComplexSource
             {
                 Id = Guid.NewGuid(),
                 FirstName = "John",
@@ -116,19 +104,32 @@ namespace Samples
                 }
             };
 
-            var personDto = TinyMapper.Map<PersonDtoComplex>(person);
+            var personDto = TinyMapper.Map<PersonComplexTarget>(person);
+        }
+
+        private static void MapPersonCustom()
+        {
+            TinyMapper.Bind<PersonCustomSource, PersonCustomTarget>();
+            var source = new PersonCustomSource
+            {
+                FirstName = "John",
+                LastName = "Doe",
+                Emails = new List<string> { "home@tinymapper.com", "work@nelibur.com" }
+            };
+
+            var result = TinyMapper.Map<PersonCustomTarget>(source);
         }
 
         private static void MeasureAutoMapper()
         {
-            Person person = CreatePerson();
-            Mapper.CreateMap<Person, PersonDto>();
+            PersonSource person = CreatePerson();
+            Mapper.CreateMap<PersonSource, PersonTarget>();
 
             Stopwatch stopwatch = Stopwatch.StartNew();
 
             for (int i = 0; i < Iterations; i++)
             {
-                var personDto = Mapper.Map<PersonDto>(person);
+                var personDto = Mapper.Map<PersonTarget>(person);
             }
             stopwatch.Stop();
             Console.WriteLine("AutoMapper: {0}ms", stopwatch.Elapsed.TotalMilliseconds);
@@ -136,13 +137,13 @@ namespace Samples
 
         private static void MeasureHandwritten()
         {
-            Person person = CreatePerson();
+            PersonSource person = CreatePerson();
 
             Stopwatch stopwatch = Stopwatch.StartNew();
 
             for (int i = 0; i < Iterations; i++)
             {
-                PersonDto personDto = MapHandwritten(person);
+                PersonTarget personDto = MapHandwritten(person);
             }
             stopwatch.Stop();
             Console.WriteLine("Handwritten: {0}ms", stopwatch.Elapsed.TotalMilliseconds);
@@ -150,14 +151,14 @@ namespace Samples
 
         private static void MeasureTinyMapper()
         {
-            Person person = CreatePerson();
-            TinyMapper.Bind<Person, PersonDto>();
+            PersonSource person = CreatePerson();
+            TinyMapper.Bind<PersonSource, PersonTarget>();
 
             Stopwatch stopwatch = Stopwatch.StartNew();
 
             for (int i = 0; i < Iterations; i++)
             {
-                var personDto = TinyMapper.Map<PersonDto>(person);
+                var personDto = TinyMapper.Map<PersonTarget>(person);
             }
 
             stopwatch.Stop();

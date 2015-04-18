@@ -53,12 +53,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Contracts\Address.cs" />
-    <Compile Include="Contracts\Person.cs" />
-    <Compile Include="Contracts\PersonComplex.cs" />
-    <Compile Include="Contracts\PersonCustom.cs" />
-    <Compile Include="Contracts\PersonDto.cs" />
-    <Compile Include="Contracts\PersonDtoComplex.cs" />
-    <Compile Include="Contracts\PersonDtoCustom.cs" />
+    <Compile Include="Contracts\PersonSource.cs" />
+    <Compile Include="Contracts\PersonComplexSource.cs" />
+    <Compile Include="Contracts\PersonCustomSource.cs" />
+    <Compile Include="Contracts\PersonTarget.cs" />
+    <Compile Include="Contracts\PersonComplexTarget.cs" />
+    <Compile Include="Contracts\PersonCustomTarget.cs" />
     <Compile Include="PersonTypeConverter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

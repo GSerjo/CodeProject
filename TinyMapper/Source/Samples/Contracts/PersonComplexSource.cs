@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Samples.Contracts
 {
-    public sealed class PersonComplex
+    public sealed class PersonComplexSource
     {
         public Address Address { get; set; }
         public DateTime CreateTime { get; set; }
