@@ -11,7 +11,7 @@ namespace ThreadPoolSample
 
         private static void AddTasks()
         {
-            for (int taskIndex = 0; taskIndex < 10; taskIndex++)
+            for (int taskIndex = 0; taskIndex < 50; taskIndex++)
             {
                 _threadPool.AddTask(new SampleTask(taskIndex));
             }
@@ -19,10 +19,18 @@ namespace ThreadPoolSample
 
         private static void Main()
         {
-            _threadPool = TinyThreadPool.Default;
+            //            _threadPool = TinyThreadPool.Default;
+            _threadPool = TinyThreadPool.Create(x =>
+            {
+                x.Name = "My ThreadPool";
+                x.MinThreads = 2;
+                x.MaxThreads = 10;
+                x.MultiThreadingCapacity = MultiThreadingCapacity.Global;
+            });
             AddTasks();
             Console.ReadKey();
         }
+
 
         private sealed class SampleTask : ITaskItem
         {
