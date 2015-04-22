@@ -19,7 +19,9 @@ namespace ThreadPoolSample
 
         private static void Main()
         {
-            //            _threadPool = TinyThreadPool.Default;
+            // create default TinyThreadPool instance or thru method TinyThreadPool.Create
+            // _threadPool = TinyThreadPool.Default;
+
             _threadPool = TinyThreadPool.Create(x =>
             {
                 x.Name = "My ThreadPool";
@@ -27,6 +29,7 @@ namespace ThreadPoolSample
                 x.MaxThreads = 10;
                 x.MultiThreadingCapacity = MultiThreadingCapacity.Global;
             });
+
             AddTasks();
             Console.ReadKey();
         }
