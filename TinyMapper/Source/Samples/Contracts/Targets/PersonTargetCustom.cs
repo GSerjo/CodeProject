@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Samples.Contracts
+namespace Samples.Contracts.Targets
 {
-    public sealed class PersonCustomTarget
+    public sealed class PersonTargetCustom
     {
         public IList<string> Emails { get; set; }
         public string FullName { get; set; }

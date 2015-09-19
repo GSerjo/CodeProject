@@ -1,8 +1,8 @@
-using System;
+﻿using System;
 
-namespace Samples.Contracts
+namespace Samples.Contracts.Sources
 {
-    public sealed class PersonTarget
+    public sealed class PersonSource
     {
         public string Address { get; set; }
         public DateTime CreateTime { get; set; }

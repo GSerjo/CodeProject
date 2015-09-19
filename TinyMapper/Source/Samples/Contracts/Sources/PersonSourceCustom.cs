@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 
-namespace Samples.Contracts
+namespace Samples.Contracts.Sources
 {
     [TypeConverter(typeof(PersonTypeConverter))]
-    public sealed class PersonCustomSource
+    public sealed class PersonSourceCustom
     {
         public IList<string> Emails { get; set; }
         public string FirstName { get; set; }

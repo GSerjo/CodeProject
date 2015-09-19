@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Samples.Contracts
+namespace Samples.Contracts.Targets
 {
-    public sealed class PersonComplexTarget
+    public sealed class PersonTargetComplex
     {
         public Address Address { get; set; }
         public DateTime CreateTime { get; set; }
-        public List<string> Emails { get; set; }
+        public IList<string> Emails { get; set; }
         public string FirstName { get; set; }
         public Guid Id { get; set; }
-        public string LastName { get; set; }
+        public string Surname { get; set; }
         public string Nickname { get; set; }
     }
 }
