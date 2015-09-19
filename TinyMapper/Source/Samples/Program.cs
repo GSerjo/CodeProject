@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using AutoMapper;
 using Nelibur.ObjectMapper;
 using Samples.Contracts;
 using Samples.Contracts.Sources;
@@ -11,102 +9,22 @@ namespace Samples
 {
     internal class Program
     {
-        private const int Iterations = 1000000;
-
-        private static PersonSource CreatePerson()
-        {
-            return new PersonSource
-            {
-                Id = Guid.NewGuid(),
-                FirstName = "John",
-                LastName = "Doe",
-                Email = "support@tinymapper.net",
-                Address = "Wall Street",
-                CreateTime = DateTime.Now,
-                Nickname = "Object Mapper",
-                Phone = "Call Me Maybe "
-            };
-        }
-
         private static void Main()
         {
-            TinyMapperMapPerson();
-            TinyMapperMapPersonComplex();
-            TinyMapperMapPersonCustom();
+            MapPerson();
+            MapPersonComplex();
+            MapPersonCustom();
 
-            MeasureHandwritten();
-            MeasureTinyMapper();
-            MeasureAutoMapper();
+            Measurements.Mesuare();
 
             Console.ReadKey();
         }
 
-        private static PersonTarget MapHandwritten(PersonSource person)
+        private static void MapPerson()
         {
-            var result = new PersonTarget
-            {
-                Id = person.Id,
-                FirstName = person.FirstName,
-                LastName = person.LastName,
-                Email = person.Email,
-                Address = person.Address,
-                CreateTime = person.CreateTime,
-                Nickname = person.Nickname,
-                Phone = person.Phone
-            };
-            return result;
-        }
+            TinyMapper.Bind<Person, PersonDto>();
 
-        private static void MeasureAutoMapper()
-        {
-            PersonSource person = CreatePerson();
-            Mapper.CreateMap<PersonSource, PersonTarget>();
-
-            Stopwatch stopwatch = Stopwatch.StartNew();
-
-            for (int i = 0; i < Iterations; i++)
-            {
-                var personDto = Mapper.Map<PersonTarget>(person);
-            }
-            stopwatch.Stop();
-            Console.WriteLine("AutoMapper: {0}ms", stopwatch.Elapsed.TotalMilliseconds);
-        }
-
-        private static void MeasureHandwritten()
-        {
-            PersonSource person = CreatePerson();
-
-            Stopwatch stopwatch = Stopwatch.StartNew();
-
-            for (int i = 0; i < Iterations; i++)
-            {
-                PersonTarget personDto = MapHandwritten(person);
-            }
-            stopwatch.Stop();
-            Console.WriteLine("Handwritten: {0}ms", stopwatch.Elapsed.TotalMilliseconds);
-        }
-
-        private static void MeasureTinyMapper()
-        {
-            PersonSource person = CreatePerson();
-            TinyMapper.Bind<PersonSource, PersonTarget>();
-
-            Stopwatch stopwatch = Stopwatch.StartNew();
-
-            for (int i = 0; i < Iterations; i++)
-            {
-                var personDto = TinyMapper.Map<PersonTarget>(person);
-            }
-
-            stopwatch.Stop();
-            Console.WriteLine("TinyMapper: {0}ms", stopwatch.Elapsed.TotalMilliseconds);
-        }
-
-        private static void TinyMapperMapPerson()
-        {
-            TinyMapper.Bind<PersonSource, PersonTarget>();
-
-            var person = new PersonSource
+            var person = new Person
             {
                 Id = Guid.NewGuid(),
                 FirstName = "John",
@@ -118,12 +36,12 @@ namespace Samples
                 Phone = "Call Me Maybe"
             };
 
-            var personDto = TinyMapper.Map<PersonTarget>(person);
+            var personDto = TinyMapper.Map<PersonDto>(person);
         }
 
-        private static void TinyMapperMapPersonComplex()
+        private static void MapPersonComplex()
         {
-            TinyMapper.Bind<PersonSourceComplex, PersonTargetComplex>(config =>
+            TinyMapper.Bind<PersonComplex, PersonDtoComplex>(config =>
             {
                 config.Ignore(source => source.CreateTime);
                 config.Ignore(source => source.Nickname);
@@ -131,7 +49,7 @@ namespace Samples
                 config.Bind(target => target.Emails, typeof(List<string>));
             });
 
-            var person = new PersonSourceComplex
+            var person = new PersonComplex
             {
                 Id = Guid.NewGuid(),
                 FirstName = "John",
@@ -151,20 +69,20 @@ namespace Samples
                 }
             };
 
-            var personDto = TinyMapper.Map<PersonTargetComplex>(person);
+            var personDto = TinyMapper.Map<PersonDtoComplex>(person);
         }
 
-        private static void TinyMapperMapPersonCustom()
+        private static void MapPersonCustom()
         {
-            TinyMapper.Bind<PersonSourceCustom, PersonTargetCustom>();
-            var source = new PersonSourceCustom
+            TinyMapper.Bind<PersonCustom, PersonDtoCustom>();
+            var source = new PersonCustom
             {
                 FirstName = "John",
                 LastName = "Doe",
                 Emails = new List<string> { "home@tinymapper.com", "work@nelibur.com" }
             };
 
-            var result = TinyMapper.Map<PersonTargetCustom>(source);
+            var result = TinyMapper.Map<PersonDtoCustom>(source);
         }
     }
 }

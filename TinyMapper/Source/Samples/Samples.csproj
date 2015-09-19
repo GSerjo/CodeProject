@@ -52,12 +52,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Contracts\Address.cs" />
-    <Compile Include="Contracts\Sources\PersonSource.cs" />
-    <Compile Include="Contracts\Sources\PersonSourceComplex.cs" />
-    <Compile Include="Contracts\Sources\PersonSourceCustom.cs" />
-    <Compile Include="Contracts\Targets\PersonTarget.cs" />
-    <Compile Include="Contracts\Targets\PersonTargetComplex.cs" />
-    <Compile Include="Contracts\Targets\PersonTargetCustom.cs" />
+    <Compile Include="Contracts\Sources\Person.cs" />
+    <Compile Include="Contracts\Sources\PersonComplex.cs" />
+    <Compile Include="Contracts\Sources\PersonCustom.cs" />
+    <Compile Include="Contracts\Targets\PersonDto.cs" />
+    <Compile Include="Contracts\Targets\PersonDtoComplex.cs" />
+    <Compile Include="Contracts\Targets\PersonDtoCustom.cs" />
+    <Compile Include="Measurements.cs" />
     <Compile Include="PersonTypeConverter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
